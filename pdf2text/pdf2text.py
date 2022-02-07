@@ -85,9 +85,9 @@ def downloadPDF(args):
     fname = os.path.join(PDF_FILES_FOLDERS,str(idx),str(idx)+".pdf")
 
     with open(fname, 'wb') as f:
-        print(f"downloading file with {idx} ...")
+        print(f"downloading file {idx} ...")
         f.write(requests.get(url).content)
-        print(f"successfully downloaded file with {idx} ...")
+        print(f"successfully downloaded file {idx}")
     
 
 def indirectURL2DirectURL(args):
@@ -101,7 +101,7 @@ def indirectURL2DirectURL(args):
     fname_pdf = os.path.join(outfolder,str(idx)+".pdf")
     fname_txt = os.path.join(outfolder,str(idx)+".txt")
 
-    print(f"Started downloading file with {idx} ... INDIRECT ....")
+    # print(f"Started downloading file with {idx} ... INDIRECT ....")
 
     response = requests.get(url)
     soup= BeautifulSoup(response.text, "html.parser")   
@@ -110,7 +110,7 @@ def indirectURL2DirectURL(args):
         pdf_url = urljoin(url,link['href'])
         with open(fname_pdf, 'wb') as f:
             f.write(requests.get(pdf_url).content)
-        print(f"Downloaded file with {idx} ... INDIRECT ....")
+        # print(f"Downloaded file with {idx} ... INDIRECT ....")
         return pdf_url
     
     
@@ -128,13 +128,13 @@ def getPDFs(pdfFiles):
         else:
             pdfsInURL.append((url,idx))
     
-    print("*** DOWNLOADING DIRECT PDFS ***")
+    # print("*** DOWNLOADING DIRECT PDFS ***")
 
     with Pool(NUMBER_OF_CPUS) as p:
         results = p.map(downloadPDF, directPDFs)
 
 
-    print("*** DOWNLOADING IN-DIRECT PDFS ***")
+    # print("*** DOWNLOADING IN-DIRECT PDFS ***")
     with Pool(NUMBER_OF_CPUS) as p:
         indResults = p.map(indirectURL2DirectURL, pdfsInURL)
 
@@ -167,11 +167,10 @@ def extractText():
     
     """
     if os.path.exists(OUT_TXT_FILES):
-        print("Removing")
         shutil.rmtree(OUT_TXT_FILES)
     os.mkdir(OUT_TXT_FILES)
 
-    files = ["42"]
+    files = os.listdir(PDF_FILES_FOLDERS)
     files = [os.path.join(PDF_FILES_FOLDERS,x) for x in files]
 
     for filePath in files:
@@ -187,19 +186,19 @@ def extractText():
 
         outFileName = os.path.join(OUT_TXT_FILES,filePath.split("/")[1]+".txt")
         outString = "\n".join(results)
-        print(outString)
         with open(outFileName,'w') as f:
             f.write("\n".join(results))
 
 
 if __name__ == "__main__":
     if os.path.exists(PDF_FILES_FOLDERS):
-        print("Removing")
         shutil.rmtree(PDF_FILES_FOLDERS)
     os.mkdir(PDF_FILES_FOLDERS)
 
     pdfFiles = readCSV(INPUT_FILE_PATH)
+    
     URLS = getPDFs(pdfFiles)
+    
     processPDFs()
     extractText()
     jsonData = []
@@ -208,7 +207,7 @@ if __name__ == "__main__":
             {
                 "page-url":data,
                 "pdf-url":URLS[i],
-                "pdf-content":os.path.json(OUT_TXT_FILES,str(i))
+                "pdf-content":os.path.join(OUT_TXT_FILES,str(i)+".txt")
             }
         )
     
