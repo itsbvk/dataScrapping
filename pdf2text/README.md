@@ -1,6 +1,6 @@
 # PDF2Text
 
-Given a keyword, `pdf2text.py` will extract urls containing information related to the keyword and one paragraph from the corresponding wikipedia page.
+Given a `data.csv` file, whose first column has urls to pdf files, `pdf2text.py` will download the pdfs, and extract the text from them.
 
 ## Pre-requisites
 
