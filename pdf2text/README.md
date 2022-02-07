@@ -1,6 +1,6 @@
 # PDF2Text
 
-Given a keyword, `wiki_expdf2texttractor.py` will extract urls containing information related to the keyword and one paragraph from the corresponding wikipedia page.
+Given a keyword, `pdf2text.py` will extract urls containing information related to the keyword and one paragraph from the corresponding wikipedia page.
 
 ## Pre-requisites
 
@@ -8,7 +8,7 @@ Given a keyword, `wiki_expdf2texttractor.py` will extract urls containing inform
 - Create a virtual environment , either using `conda` or `venv`
 - To create a virtual environment using anaconda, do the following:
     - `conda create -n pdf2text`
-    - `conda activate wikiExtractor`
+    - `conda activate pdf2text`
 - Ensure `pip` is installed within the `conda` environment, by running `which pip`
     - If `pip` isn't pointing to a location within the conda environment just created, run `conda install pip` 
       inside the environment to install `pip`
