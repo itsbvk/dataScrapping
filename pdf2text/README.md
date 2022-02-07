@@ -1,4 +1,4 @@
-# WikiExtractor
+# PDF2Text
 
 Given a keyword, `wiki_expdf2texttractor.py` will extract urls containing information related to the keyword and one paragraph from the corresponding wikipedia page.
 
@@ -15,8 +15,32 @@ Given a keyword, `wiki_expdf2texttractor.py` will extract urls containing inform
 - `pip install -r requirements.txt`
 
 ## Usage
-`python pdf2text.py 
+`python pdf2text.py`
+- Assumes that a `data.csv` file is present in the current directory.
+    - To change the filename, change the `INPUT_FILE_PATH` variable in `config.py`
 
-
-
-
+## Implementation Details:
+1. Uses multiprocessing.
+2. Can extract images from both direct (.pdf) and indirect urls (webpages containing pdf links)
+3. output format:
+    ```
+    [
+        {
+            "page-url":"https://some/url/",
+            "pdf-url":"https://1.pdf",
+            "pdf-content":"output/1.txt"
+        },
+        {
+            "page-url":"https://some/url2/",
+            "pdf-url":"https://2.pdf",
+            "pdf-content":"output/2.txt"
+        },
+        .,
+        .,
+        {
+            "page-url":"https://some/urln/",
+            "pdf-url":"https://n.pdf",
+            "pdf-content":"output/n.txt"
+        }
+    ]
+    ```
