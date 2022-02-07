@@ -1,0 +1,4 @@
+requests
+pdf2images
+pytesseract
+opencv-python

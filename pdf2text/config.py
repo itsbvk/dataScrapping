@@ -1,0 +1,9 @@
+INPUT_FILE_PATH = "data.csv"
+PDF_FILES_FOLDERS = "pdfs"
+OUT_TXT_FILES = "output"
+MIN_NUMBER_OF_CPUS = 1
+PERCENTAGE_CPUS = 0.8
+API_URL = "https://archive.org/"
+VALID_PDF_EXTENTION = ".pdf"
+CONFIG = ('-l mar --psm 1')
+OUTFILE = 'pdf_extract.json'
